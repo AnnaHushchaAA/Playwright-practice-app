@@ -14,7 +14,11 @@ export default defineConfig<testoptions>({
   fullyParallel: false,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
+  reporter:[ ['html'],
+    ['json', {outputFile: 'test-results/jsonreport.json'}],
+    ['allure-playwright']
+  ],
+
   use: {
     globalsQaURL: 'https://www.globalsqa.com/demo-site/draganddrop/',
     baseURL: process.env.DEV === '1' ? 'http://localhost:4202'
@@ -54,6 +58,19 @@ export default defineConfig<testoptions>({
           mode: 'on',
           size: { width: 1928, height: 1000 }
         }
-      },
-    }]
+      }
+    },
+    {
+      name: 'Mobile',
+      testMatch: 'testMobile.spec.ts',
+      use: {
+        ...devices['iPhone 15 Pro']
+        //viewport: { width: 414, height: 800 }
+      }
+    }
+  ],
+  webServer:{
+    command: "npm run start",
+    url: 'http://localhost:4200'
+  }
 });

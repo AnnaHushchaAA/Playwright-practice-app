@@ -27,23 +27,25 @@ test.describe('Form layout page', () => {
 
     });
 
-    test('radiio buttons', async ({page}) => {
+    test.only('radiio buttons', async ({page}) => {
         const usingTheGridForm = page.locator('nb-card', {hasText: 'Using the Grid'});
         //two varians of selecting radio buttons
         //await usingTheGridForm.getByLabel('Option 1').check({force: true});
-        await usingTheGridForm.getByRole('radio', {name: 'Option 1'}).check({force: true});
+        await usingTheGridForm.getByRole('radio', {name: 'Option 2'}).check({force: true});
 
         //Generic assertion
         const isChecked = await usingTheGridForm.getByRole('radio', {name: 'Option 1'}).isChecked();
-        expect (isChecked).toBeTruthy();
+        await expect(usingTheGridForm).toHaveScreenshot({maxDiffPixels: 250})
+
+        //expect (isChecked).toBeTruthy();
 
         //Locator assertion
-        await expect (usingTheGridForm.getByRole('radio', {name: 'Option 1'})).toBeChecked();
+        //await expect (usingTheGridForm.getByRole('radio', {name: 'Option 1'})).toBeChecked();
 
-        await usingTheGridForm.getByRole('radio', {name: 'Option 2'}).check({force: true});
+        //await usingTheGridForm.getByRole('radio', {name: 'Option 2'}).check({force: true});
         //Negative generic assertion
-        expect (await usingTheGridForm.getByRole('radio', {name: 'Option 1'}).isChecked()).toBeFalsy();
-        expect (await usingTheGridForm.getByRole('radio', {name: 'Option 2'}).isChecked()).toBeTruthy();
+        //expect (await usingTheGridForm.getByRole('radio', {name: 'Option 1'}).isChecked()).toBeFalsy();
+        //expect (await usingTheGridForm.getByRole('radio', {name: 'Option 2'}).isChecked()).toBeTruthy();
         //Negative locator assertion
         //await expect ( usingTheGridForm.getByRole('radio', {name: 'Option 1'})).not.toBeChecked();
 
